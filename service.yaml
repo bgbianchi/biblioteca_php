@@ -13,13 +13,19 @@ spec:
         - name: DB_HOST
           value: "127.0.0.1" # IMPORTANTE: En Cloud Run se hablan por localhost
         - name: DB_USER
-          value: "root"
+          value: "biblioteca_user"
         - name: DB_PASS
-          value: "root_password"
+          value: "biblioteca_password"
         - name: DB_NAME
           value: "biblioteca_db"
       - image: mysql:8.0
+        ports:
+          - containerPort: 3306
         env:
+        - name: MYSQL_USER
+          value: "biblioteca_user"
+        - name: MYSQL_PASSWORD
+          value: "biblioteca_password"
         - name: MYSQL_ROOT_PASSWORD
           value: "root_password"
         - name: MYSQL_DATABASE
