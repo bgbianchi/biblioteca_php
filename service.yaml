@@ -37,4 +37,4 @@ spec:
       - name: mysql-data
         emptyDir:
           medium: Memory
-          sizeLimit: 512Mi 
+          sizeLimit: 2Gi 

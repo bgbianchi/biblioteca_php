@@ -22,27 +22,34 @@ class Database {
      */
     public function getConnection() {
         $this->conn = null;
+        $max_retries = 5;
+        $attempts = 0;
 
-        try {
-            // 1. Conexión inicial al servicio "db"
-            $this->conn = new PDO(
-                "mysql:host={$this->db_host};port={$this->db_port}", 
-                $this->username, 
-                $this->password,
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
+        while($attempts < $max_retries) {
+            try {
+                // 1. Conexión inicial al servicio "db"
+                $this->conn = new PDO(
+                    "mysql:host={$this->db_host};port={$this->db_port}", 
+                    $this->username, 
+                    $this->password,
+                    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+                );
 
-            // 2. Crear base de datos si no existe
-            $this->conn->exec("CREATE DATABASE IF NOT EXISTS " . $this->db_name . " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-            $this->conn->exec("USE " . $this->db_name);
+                // 2. Crear base de datos si no existe
+                $this->conn->exec("CREATE DATABASE IF NOT EXISTS " . $this->db_name . " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+                $this->conn->exec("USE " . $this->db_name);
 
-            // 3. Ejecutar creación de tablas
-            $this->createTables();
+                // 3. Ejecutar creación de tablas
+                $this->createTables();
 
-        } catch(PDOException $exception) {
-            die("Error crítico de base de datos: " . $exception->getMessage());
+            } catch(PDOException $exception) {
+                $attempts++;
+                error_log("Intento $attempts: Esperando a MySQL...");
+                sleep(5);
+            }
+
+            die("Error: No se pudo conectar a la base de datos tras varios intentos.");
         }
-
         return $this->conn;
     }
 
