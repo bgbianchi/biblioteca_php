@@ -16,6 +16,8 @@ spec:
           value: "root"
         - name: DB_PASS
           value: "root_password"
+        - name: DB_NAME
+          value: "biblioteca_db"
       - image: mysql:8.0
         env:
         - name: MYSQL_ROOT_PASSWORD

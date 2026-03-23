@@ -2,11 +2,19 @@
 // config/Database.php
 
 class Database {
-    private $host = "db"; // Debe coincidir con el nombre del servicio en docker-compose
-    private $db_name = "biblioteca_db";
-    private $username = "root";
-    private $password = "root_password"; 
+    private $host;
+    private $db_name;
+    private $username;
+    private $password; 
     public $conn;
+
+    public function __construct() {
+        // Detecta automáticamente dónde está la base de datos
+        $this->host = getenv('DB_HOST') ?: "db"; // Debe coincidir con el nombre del servicio en docker-compose
+        $this->db_name = getenv('DB_NAME') ?: "biblioteca_db";
+        $this->username = getenv('DB_USER') ?: "root";
+        $this->password = getenv('DB_PASS') ?: "root_password";
+    }
 
     /**
      * Establece la conexión y asegura la existencia de la estructura de datos.
