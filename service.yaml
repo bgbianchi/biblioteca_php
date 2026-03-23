@@ -1,0 +1,24 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: biblioteca-demo
+spec:
+  template:
+    spec:
+      containers:
+      - image: southamerica-east1-docker.pkg.dev/nexus-491112/biblioteca-php/app-biblioteca:v1
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          value: "127.0.0.1" # IMPORTANTE: En Cloud Run se hablan por localhost
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASS
+          value: "root_password"
+      - image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root_password"
+        - name: MYSQL_DATABASE
+          value: "biblioteca_db"
