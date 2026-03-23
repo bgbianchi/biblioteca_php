@@ -19,8 +19,6 @@ spec:
         - name: DB_NAME
           value: "biblioteca_db"
       - image: mysql:8.0
-        ports:
-          - containerPort: 3306
         env:
         - name: MYSQL_USER
           value: "biblioteca_user"
