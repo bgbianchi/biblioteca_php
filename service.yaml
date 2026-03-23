@@ -11,7 +11,7 @@ spec:
         - containerPort: 80
         env:
         - name: DB_HOST
-          value: "localhost" # IMPORTANTE: En Cloud Run se hablan por localhost
+          value: "127.0.0.1" # IMPORTANTE: En Cloud Run se hablan por localhost
         - name: DB_PORT
           value: "3306"
         - name: DB_USER
