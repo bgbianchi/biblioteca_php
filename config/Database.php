@@ -2,18 +2,19 @@
 // config/Database.php
 
 class Database {
-    private $host;
+    private $db_host;
+    private $db_port;
     private $db_name;
     private $username;
     private $password; 
     public $conn;
 
     public function __construct() {
-        // Detecta automáticamente dónde está la base de datos
-        $this->host = getenv('DB_HOST') ?: "db"; // Debe coincidir con el nombre del servicio en docker-compose
-        $this->db_name = getenv('DB_NAME') ?: "biblioteca_db";
-        $this->username = getenv('DB_USER') ?: "root";
-        $this->password = getenv('DB_PASS') ?: "root_password";
+        $this->db_host = getenv('DB_HOST');
+        $this->db_port = getenv('DB_PORT');
+        $this->db_name = getenv('DB_NAME');
+        $this->username = getenv('DB_USER');
+        $this->password = getenv('DB_PASS');
     }
 
     /**
@@ -25,7 +26,7 @@ class Database {
         try {
             // 1. Conexión inicial al servicio "db"
             $this->conn = new PDO(
-                "mysql:host=" . $this->host, 
+                "mysql:host=$db_host;port=$db_port", 
                 $this->username, 
                 $this->password,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]

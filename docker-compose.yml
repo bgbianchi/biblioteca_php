@@ -30,6 +30,12 @@ services:
       - db
     networks:
       - biblioteca-net
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: biblioteca_user
+      DB_PASS: biblioteca_password
+      DB_NAME: biblioteca_db
 
 volumes:
   db_data:
