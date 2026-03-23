@@ -1,0 +1,33 @@
+services:
+  # Servicio de Base de Datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: biblioteca_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: biblioteca_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: biblioteca_user
+      MYSQL_PASSWORD: biblioteca_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Servicio de Aplicación PHP + Apache
+  app:
+    image: php:8.2-apache
+    container_name: biblioteca_app
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    # Instalamos la extensión PDO MySQL necesaria para el archivo Database.php
+    command: >
+      sh -c "docker-php-ext-install pdo pdo_mysql && apache2-foreground"
+
+volumes:
+  db_data:

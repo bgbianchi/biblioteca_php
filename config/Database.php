@@ -2,10 +2,10 @@
 // config/Database.php
 
 class Database {
-    private $host = "localhost";
+    private $host = "db"; // Debe coincidir con el nombre del servicio en docker-compose
     private $db_name = "biblioteca_db";
     private $username = "root";
-    private $password = ""; // Cambia esto si tienes contraseña en tu servidor local
+    private $password = "root_password"; 
     public $conn;
 
     /**
@@ -15,7 +15,7 @@ class Database {
         $this->conn = null;
 
         try {
-            // 1. Conexión inicial al servidor MySQL
+            // 1. Conexión inicial al servicio "db"
             $this->conn = new PDO(
                 "mysql:host=" . $this->host, 
                 $this->username, 
