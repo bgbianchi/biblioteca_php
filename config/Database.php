@@ -49,7 +49,7 @@ class Database {
 
                 return $this->conn;
             } catch(PDOException $exception) {
-                error_log("Intento {$attempts}/{$max_retries}: MySQL aún no listo ({$e->getMessage()})");
+                error_log("Intento {$attempts}/{$max_retries}: MySQL aún no listo ({$exception->getMessage()})");
                 sleep($delay_sec);
             }
         }
