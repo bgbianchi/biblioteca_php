@@ -16,7 +16,8 @@ services:
 
   # Servicio de Aplicación PHP + Apache
   app:
-    image: php:8.2-apache
+    image: southamerica-east1-docker.pkg.dev/nexus-491112/biblioteca-php/app-biblioteca:v1
+    build: .
     container_name: biblioteca_app
     restart: always
     ports:
@@ -25,9 +26,6 @@ services:
       - .:/var/www/html
     depends_on:
       - db
-    # Instalamos la extensión PDO MySQL necesaria para el archivo Database.php
-    command: >
-      sh -c "docker-php-ext-install pdo pdo_mysql && apache2-foreground"
 
 volumes:
   db_data:
