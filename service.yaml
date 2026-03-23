@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-      - image: southamerica-east1-docker.pkg.dev/nexus-491112/biblioteca-php/app-biblioteca:v1
+      - image: southamerica-east1-docker.pkg.dev/nexus-491112/biblioteca-php/app-biblioteca:v2
         ports:
         - containerPort: 80
         env:
