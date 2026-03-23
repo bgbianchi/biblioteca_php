@@ -1,0 +1,50 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  PROJECT_ID: nexus-491112
+  REGION: southamerica-east1
+  REPOSITORY: biblioteca-php
+  IMAGE_NAME: app-biblioteca
+  SERVICE_NAME: biblioteca-demo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 1. Autenticación con Google Cloud
+    # Necesitas crear un "Workload Identity Federation" o usar una Service Account Key en GitHub Secrets
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+    # 2. Configurar Docker para Artifact Registry
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+    # 3. Construir y Subir la imagen
+    - name: Build and Push Container
+      run: |-
+        docker build -t ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+    # 4. Desplegar en Cloud Run usando tu service.yaml
+    # Usamos envsubst para inyectar la nueva imagen en el YAML si fuera necesario, 
+    # o simplemente actualizamos el servicio apuntando al nuevo tag.
+    - name: Deploy to Cloud Run
+      run: |-
+        gcloud run services replace service.yaml \
+          --region ${{ env.REGION }}
+        
+        # Forzamos la actualización de la imagen a la versión con el hash de commit
+        gcloud run services update ${{ env.SERVICE_NAME }} \
+          --platform managed \
+          --region ${{ env.REGION }} \
+          --image ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
