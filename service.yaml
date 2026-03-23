@@ -15,9 +15,9 @@ spec:
         - name: DB_PORT
           value: "3306"
         - name: DB_USER
-          value: "biblioteca_user"
+          value: "root"
         - name: DB_PASS
-          value: "biblioteca_password"
+          value: "root_password"
         - name: DB_NAME
           value: "biblioteca_db"
       - image: mysql:8.0
