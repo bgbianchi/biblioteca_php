@@ -26,7 +26,7 @@ class Database {
         try {
             // 1. Conexión inicial al servicio "db"
             $this->conn = new PDO(
-                "mysql:host=$db_host;port=$db_port", 
+                "mysql:host={$this->db_host};port={$this->db_port}", 
                 $this->username, 
                 $this->password,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
