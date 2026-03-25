@@ -7,7 +7,7 @@
     <!-- Encabezado de Bienvenida -->
     <div class="text-center mb-16">
         <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
-            Panel de Administración -v2.0.0-
+            Panel de Administración -v3.0.0-
         </h1>
         <p class="mt-4 text-lg text-slate-600">
             Bienvenido al sistema de gestión de biblioteca. Seleccione una entidad para comenzar a trabajar.
