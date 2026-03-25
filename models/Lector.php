@@ -22,7 +22,7 @@ class Lector {
         return $stmt;
     }
 
-    // Registrar nuevo lector
+    // Registrar un nuevo lector
     public function crear() {
         $query = "INSERT INTO " . $this->table_name . " (nombre, dni, email) VALUES (:nombre, :dni, :email)";
         $stmt = $this->conn->prepare($query);
