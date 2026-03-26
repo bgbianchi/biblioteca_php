@@ -6,9 +6,9 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: biblioteca_db
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: biblioteca_user
-      MYSQL_PASSWORD: biblioteca_password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -34,7 +34,7 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_USER: root
-      DB_PASS: root_password
+      DB_PASS: ${MYSQL_ROOT_PASSWORD}
       DB_NAME: biblioteca_db
 
 volumes:

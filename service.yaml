@@ -17,7 +17,10 @@ spec:
         - name: DB_USER
           value: "root"
         - name: DB_PASS
-          value: "root_password"
+          valueFrom:
+            secretKeyRef:
+              name: biblioteca_php-MYSQL_ROOT_PASSWORD-test
+              key: "latest"
         - name: DB_NAME
           value: "biblioteca_db"
       - image: mysql:8.0
@@ -25,9 +28,15 @@ spec:
         - name: MYSQL_USER
           value: "biblioteca_user"
         - name: MYSQL_PASSWORD
-          value: "biblioteca_password"
+          valueFrom:
+            secretKeyRef:
+              name: biblioteca_php-MYSQL_PASSWORD-test
+              key: "latest"
         - name: MYSQL_ROOT_PASSWORD
-          value: "root_password"
+          valueFrom:
+            secretKeyRef:
+              name: biblioteca_php-MYSQL_ROOT_PASSWORD-test
+              key: "latest"
         - name: MYSQL_DATABASE
           value: "biblioteca_db"
         volumeMounts:

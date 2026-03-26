@@ -15,7 +15,7 @@ class Database {
         $this->db_port = getenv('DB_PORT') ?: '3306';
         $this->db_name = getenv('DB_NAME') ?: 'biblioteca_db';
         $this->username = getenv('DB_USER') ?: 'root';
-        $this->password = getenv('DB_PASS') ?: 'root_password';
+        $this->password = getenv('DB_PASS');
     }
 
     /**
